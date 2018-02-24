@@ -1,12 +1,15 @@
-
+import React from 'react';
 import { expect } from 'chai';
-import { sinon } from 'sinon';
-import { shallow } from 'enzyme';
+import  sinon  from 'sinon';
+import { shallow, configure  } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-15';
 
 import { Map } from 'immutable';
 
 import PhoneFieldGroup from '../../src/components/PhoneFieldGroup/PhoneFieldGroup';
-import {InputField} from '../../src/components/InputField/InputField';
+//import {InputField} from '../../src/components/InputField/InputField';
+
+configure({ adapter: new Adapter() });
 
 describe('PhoneFieldGroup', function() {
     let currentContent, submitFlag, updatePhoneFieldType, removePhoneField, setPhoneField, updateSubmitFlag, availableTypes;
@@ -36,9 +39,9 @@ describe('PhoneFieldGroup', function() {
 
     describe('<PhoneFieldGroup>', function() {
         context('when there is one phone field entry', function() {
-            it('should render one Inputfield', function() {
+            it('should render one Inputfield with null as data prop', function() {
                 let PhoneFieldGroupWrapper = getPhoneFieldGroupWrapper();
-                expect(PhoneFieldGroupWrapper).to.have.exactly(1).type(InputField);
+                expect(PhoneFieldGroupWrapper.childAt(4).props()).to.be.deep.equals({data: null});
             });
         });
     });

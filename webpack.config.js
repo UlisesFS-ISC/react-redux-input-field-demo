@@ -1,5 +1,5 @@
-const webpack = require('webpack')
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const webpack = require('webpack');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const config = {
     entry: [
         'webpack-dev-server/client?http://localhost:8080',
@@ -24,6 +24,14 @@ const config = {
                 })
             },
             {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'sass-style-loader',
+                    use: 'sass-loader'
+
+                })
+            },
+            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: ['babel-loader', 'eslint-loader']
@@ -31,7 +39,7 @@ const config = {
         ],
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.css'],
+        extensions: ['*', '.js', '.jsx', '.css', '.scss'],
     },
     output: {
         path: __dirname + '/dist',
@@ -50,9 +58,9 @@ const config = {
         historyApiFallback: true
     }
 
-}
+};
 if (process.env.NODE_ENV === 'production') {
-    config.devtool = "cheap-module-source-map"
+    config.devtool = "cheap-module-source-map";
     config.plugins.push(
         new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
         new ExtractTextPlugin({
@@ -68,11 +76,11 @@ if (process.env.NODE_ENV === 'production') {
     )
 
 } else {
-    config.devtool = "cheap-module-eval-source-map"
+    config.devtool = "cheap-module-eval-source-map";
     config.plugins.push(
         new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
         new ExtractTextPlugin({ disable: true })
     )
 }
 
-module.exports = config
+module.exports = config;
